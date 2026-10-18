@@ -103,3 +103,44 @@ class SinglyLinkedList:
             current = current.next
 
         raise ValueError("Value not found")
+
+    def build_list_forward(self, values):
+        if not self.is_empty():
+            raise ValueError("List must be empty before building")
+
+        for value in values:
+            self.append(value)
+
+    def build_list_backward(self, values):
+        if not self.is_empty():
+            raise ValueError("List must be empty before building")
+
+        for value in values:
+            self.prepend(value)
+
+    def remove_all(self, value):
+        removed = 0
+        current = self._head
+        previous = None
+
+        while current is not None:
+            if current.data == value:
+                if previous is None:
+                    self._head = current.next
+                else:
+                    previous.next = current.next
+
+                if current is self._tail:
+                    self._tail = previous
+
+                self._count -= 1
+                removed += 1
+
+                next_node = current.next
+                current.next = None
+                current = next_node
+            else:
+                previous = current
+                current = current.next
+
+        return removed
