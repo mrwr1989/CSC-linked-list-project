@@ -51,3 +51,55 @@ class SinglyLinkedList:
         if values:
             return "Head -> " + values + " -> None"
         return "Head -> None"
+
+    def contains(self, value):
+        current = self._head
+
+        while current is not None:
+            if current.data == value:
+                return True
+            current = current.next
+
+        return False
+
+    def insert_after(self, existing_value, new_value):
+        current = self._head
+
+        while current is not None:
+            if current.data == existing_value:
+                new_node = Node(new_value)
+                new_node.next = current.next
+                current.next = new_node
+
+                if self._tail is current:
+                    self._tail = new_node
+
+                self._count += 1
+                return
+
+            current = current.next
+
+        raise ValueError("Existing value not found")
+
+    def remove(self, value):
+        current = self._head
+        previous = None
+
+        while current is not None:
+            if current.data == value:
+                if previous is None:
+                    self._head = current.next
+                else:
+                    previous.next = current.next
+
+                if self._tail is current:
+                    self._tail = previous
+
+                self._count -= 1
+                current.next = None
+                return
+
+            previous = current
+            current = current.next
+
+        raise ValueError("Value not found")
